@@ -1,0 +1,8 @@
+{
+  "messages": [
+    { "id": "1", "message": "Selam" },
+    { "id": "2", "message": "Merhaba" },
+    { "id": "3", "message": "Deneme" },
+    { "id": "4", "message": "AS" }
+  ]
+}
