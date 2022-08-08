@@ -11,6 +11,8 @@ function App() {
   const [saveMessage] = useMutation(CREATE_MESSAGE);
   const [messages, setMessages] = useState([]);
 
+  const [form] = Form.useForm();
+
   useEffect(() => {
     if (!loading || data) {
       setMessages((m) => [data.messageCreated, ...m]);
@@ -27,6 +29,7 @@ function App() {
           },
         },
       });
+      form.resetFields();
     } catch (e) {
       console.log(e);
     }
@@ -35,7 +38,7 @@ function App() {
   return (
     <div className="App">
       <Row>
-        <Col md={{ span: 8, offset: 8 }} className="chat-bg">
+        <Col lg={{ span: 8, offset: 8 }} md={{ span: 12, offset: 6 }} sm={{ span: 16, offset: 4 }} xs={{ span: 20, offset: 2 }} className="chat-bg">
           {data &&
             messages.map((message) => (
               <Row justify={message.user === myID ? 'end' : 'start'} key={message.id}>
@@ -43,8 +46,8 @@ function App() {
               </Row>
             ))}
         </Col>
-        <Col md={{ span: 8, offset: 8 }}>
-          <Form layout="vertical" onFinish={onFinish} autoComplete="off">
+        <Col lg={{ span: 8, offset: 8 }} md={{ span: 12, offset: 6 }} sm={{ span: 16, offset: 4 }} xs={{ span: 20, offset: 2 }}>
+          <Form form={form} layout="vertical" onFinish={onFinish} autoComplete="off">
             <Form.Item name="message">
               <Input size="large" />
             </Form.Item>

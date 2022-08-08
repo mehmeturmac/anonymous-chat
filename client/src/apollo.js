@@ -4,14 +4,14 @@ import { split, HttpLink } from '@apollo/client';
 import { getMainDefinition } from '@apollo/client/utilities';
 
 const wsLink = new WebSocketLink({
-  uri: 'ws://localhost:4000/graphql',
+  uri: 'wss://chat-app-graphql.herokuapp.com/graphql',
   options: {
     reconnect: true,
   },
 });
 
 const httpLink = new HttpLink({
-  uri: 'http://localhost:4000/graphql',
+  uri: 'https://chat-app-graphql.herokuapp.com/graphql',
 });
 
 const splitLink = split(
