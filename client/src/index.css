@@ -20,11 +20,15 @@ code {
 }
 
 .chat-message {
-  background-color: #fff;
-  color: #333;
+  background-color: #65676b;
+  color: #fff;
   border-radius: 8px;
   margin: 0 0px 6px 6px;
   padding: 12px 18px;
   box-shadow: 0 2px 1px rgba(0, 0, 0, 0.08);
   border: 0.5 solid rgba(0, 0, 0, 0.02);
+}
+
+.right {
+  background-color: #1877f2;
 }

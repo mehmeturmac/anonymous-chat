@@ -5,6 +5,7 @@ export const GET_MESSAGES = gql`
     messages {
       id
       message
+      user
     }
   }
 `;
@@ -14,6 +15,7 @@ export const CREATE_MESSAGE = gql`
     createMessage(data: $data) {
       id
       message
+      user
     }
   }
 `;
@@ -23,6 +25,7 @@ export const MESSAGE_SUBS = gql`
     messageCreated {
       id
       message
+      user
     }
   }
 `;

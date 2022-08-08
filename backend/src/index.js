@@ -7,7 +7,7 @@ const { SubscriptionServer } = require('subscriptions-transport-ws');
 const { execute, subscribe } = require('graphql');
 const { v4: uuidv4 } = require('uuid');
 
-const { messages } = require('./data.json');
+const messages = [];
 
 const app = express();
 const httpServer = createServer(app);
@@ -16,10 +16,12 @@ const typeDefs = gql`
   type Message {
     id: ID!
     message: String!
+    user: String!
   }
 
   input createMessage {
     message: String!
+    user: String!
   }
 
   type Query {

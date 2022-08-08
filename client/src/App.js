@@ -1,36 +1,29 @@
 import { useEffect, useState } from 'react';
-import { useQuery, useMutation } from '@apollo/client';
-import { GET_MESSAGES, CREATE_MESSAGE, MESSAGE_SUBS } from './queries';
-import { Col, Row, Input, Form, Spin } from 'antd';
+import { useMutation, useSubscription } from '@apollo/client';
+import { CREATE_MESSAGE, MESSAGE_SUBS } from './queries';
+import { Col, Row, Input, Form } from 'antd';
+const { v4: uuidv4 } = require('uuid');
+
+const myID = uuidv4();
 
 function App() {
-  const [fromMe, setFromMe] = useState(false);
-  const { loading: query_loading, data: query_data, subscribeToMore } = useQuery(GET_MESSAGES);
+  const { loading, data } = useSubscription(MESSAGE_SUBS);
   const [saveMessage] = useMutation(CREATE_MESSAGE);
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    subscribeToMore({
-      document: MESSAGE_SUBS,
-      updateQuery: (prev, { subscriptionData }) => {
-        if (!subscriptionData.data) return prev;
-        return {
-          messages: [subscriptionData.data.messageCreated, ...prev.messages],
-        };
-      },
-    });
-  }, [subscribeToMore]);
-
-  if (query_loading || !query_data) {
-    return <Spin delay={300} size="middle" tip="Loading..." />;
-  }
+    if (!loading || data) {
+      setMessages((m) => [data.messageCreated, ...m]);
+    }
+  }, [data, loading]);
 
   const onFinish = async (values) => {
-    setFromMe(true);
     try {
       await saveMessage({
         variables: {
           data: {
             message: values.message,
+            user: myID,
           },
         },
       });
@@ -43,11 +36,12 @@ function App() {
     <div className="App">
       <Row>
         <Col md={{ span: 8, offset: 8 }} className="chat-bg">
-          {query_data.messages.map((message) => (
-            <Row justify="start" key={message.id}>
-              <p className="chat-message">{message.message}</p>
-            </Row>
-          ))}
+          {data &&
+            messages.map((message) => (
+              <Row justify={message.user === myID ? 'end' : 'start'} key={message.id}>
+                <p className={message.user === myID ? 'chat-message right' : 'chat-message'}>{message.message}</p>
+              </Row>
+            ))}
         </Col>
         <Col md={{ span: 8, offset: 8 }}>
           <Form layout="vertical" onFinish={onFinish} autoComplete="off">
