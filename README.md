@@ -1,6 +1,8 @@
 # Anonymous Chat
 
-![RickAndMortyCharacters](/img/Chat.png)
+> https://chat-app-mu.netlify.app/
+
+![chat-app](/img/Main.png)
 
 ## Kullanılan Kaynaklar ve Paketler
 
@@ -9,6 +11,10 @@
 - [GraphQL](https://graphql.org/)
 
 - [@apollo/client](https://www.apollographql.com/docs/react/)
+
+## Responsive
+
+![chat-app](/img/Mobile.png)
 
 ## License
 
